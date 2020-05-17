@@ -48,20 +48,28 @@ namespace romscraper
 
             var pageDocumentPlatformIndex = new HtmlDocument();
             pageDocumentPlatformIndex.Load(web3);
-
+            
             var listLinks = pageDocumentPlatformIndex.DocumentNode.SelectNodes("//div[@class='rom-tr title']/a");
+            string[] files = Directory.GetFiles(@"/prueba/");
             foreach(var node in listLinks){
-                var html = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
-                HtmlWeb htmlweb = new HtmlWeb();
-                var htmlRom = htmlweb.Load(html);
-                var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
-                string romScript = romLink.OuterHtml;
-                int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
-                string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
-                WebClient wClient = new WebClient();
-                wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
-                count++;
-                WriteLine($"Downloaded: {count}");
+                if(Array.IndexOf(files, node.InnerText)>=0){
+                    WriteLine("Game already downloaded");
+                }
+                else{
+                    WriteLine("To be downloaded!");
+                    // var html = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
+                    // HtmlWeb htmlweb = new HtmlWeb();
+                    // var htmlRom = htmlweb.Load(html);
+                    // var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
+                    // string romScript = romLink.OuterHtml;
+                    // int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
+                    // string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
+                    // WebClient wClient = new WebClient();
+                    // wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
+                    // count++;
+                    // WriteLine($"Downloaded: {count}");   
+                }
+                
                 
                 // Write(node.InnerText + ": ");
                 // Console.WriteLine(node.Attributes["href"].Value);
