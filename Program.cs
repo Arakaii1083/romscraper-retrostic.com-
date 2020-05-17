@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using System.Net;
 using System.IO;
+using System.Collections.Generic;
 
 namespace romscraper
 {
@@ -50,30 +51,37 @@ namespace romscraper
             pageDocumentPlatformIndex.Load(web3);
             
             var listLinks = pageDocumentPlatformIndex.DocumentNode.SelectNodes("//div[@class='rom-tr title']/a");
-            string[] files = Directory.GetFiles(@"/prueba/");
+
+            string[] files = Directory.GetFiles(@"C:\Users\MSI\Google Drive\Projects\romscraper\prueba");
+            var filesNames = new List<string>();
+
+            foreach(string file in files){
+                filesNames.Add(Path.GetFileName(file));
+            }
+
             foreach(var node in listLinks){
-                if(Array.IndexOf(files, node.InnerText)>=0){
-                    WriteLine("Game already downloaded");
+                if(!filesNames.Contains(node.InnerText + ".zip")){
+                    var html = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
+                    HtmlWeb htmlweb = new HtmlWeb();
+                    var htmlRom = htmlweb.Load(html);
+
+                    var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
+                    string romScript = romLink.OuterHtml;
+                    int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
+                    string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
+
+                    WebClient wClient = new WebClient();
+                    wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
+                    count++;
+                    WriteLine($"Downloaded {count} out of {listLinks.Count - filesNames.Count}");
                 }
-                else{
-                    WriteLine("To be downloaded!");
-                    // var html = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
-                    // HtmlWeb htmlweb = new HtmlWeb();
-                    // var htmlRom = htmlweb.Load(html);
-                    // var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
-                    // string romScript = romLink.OuterHtml;
-                    // int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
-                    // string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
-                    // WebClient wClient = new WebClient();
-                    // wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
-                    // count++;
-                    // WriteLine($"Downloaded: {count}");   
-                }
-                
-                
+                // else{
+                //     WriteLine($"{node.InnerText}: Game already downloaded");
+                // }                    
+            }
                 // Write(node.InnerText + ": ");
                 // Console.WriteLine(node.Attributes["href"].Value);
-            }
+        }
 
             /******ROM/SCRIPT/URL EXTRACTOR******/
             // var web4 = @"source/index_rom_test.html";
@@ -91,6 +99,6 @@ namespace romscraper
 
             // WebClient wClient = new WebClient();
             // wClient.DownloadFile(urlDownload, @"prueba/rom.zip");
-        }
+        
     }
 }
