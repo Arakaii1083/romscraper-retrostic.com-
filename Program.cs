@@ -6,6 +6,8 @@ using HtmlAgilityPack;
 using System.Net;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 
 namespace romscraper
 {
@@ -13,6 +15,10 @@ namespace romscraper
     {
         static void Main(string[] args)
         {
+            Stopwatch sw1 = new Stopwatch();
+            sw1.Start();
+            int total = 0;
+
             /******URI FETCHER******/
             // HttpClient client = new HttpClient();
             // var response = await client.GetAsync("https://www.freeroms.com/");
@@ -32,53 +38,65 @@ namespace romscraper
             // }
 
             /******INDEX FETCHER******/
-            // var web2 = @"source/index_amiga.html";
+            var web2 = @"source/index_amiga.html";
 
-            // var pageDocumentPlatform = new HtmlDocument();
-            // pageDocumentPlatform.Load(web2);
+            var pageDocumentPlatform = new HtmlDocument();
+            pageDocumentPlatform.Load(web2);
 
-            // var listLinks = pageDocumentPlatform.DocumentNode.SelectNodes("//div[@class='page']/a");
-            // foreach(var node in listLinks){
-            //     Write(node.InnerText + ": ");
-            //     Console.WriteLine(node.Attributes["href"].Value);
-            // }
+            var listLinks = pageDocumentPlatform.DocumentNode.SelectNodes("//div[@class='page']/a");
+            foreach(var node in listLinks){
+                WriteLine(node.InnerText + ": ");
+                romFetcher(node.Attributes["href"].Value);
+            }
+            WriteLine($"Total downloaded: {total}");
+            sw1.Stop();
+            long ts = sw1.ElapsedMilliseconds;
+            WriteLine($"{ts/1000:N0}");
 
             /******ROM/URL FETCHER******/
-            int count = 0;
-            var web3 = @"source/index_amiga_a.html";
+            void romFetcher(string uri){
+                int count = 0;
+                bool flag = false;
+                
+                var html = @"https://www.freeroms.com/"+uri;
+                HtmlWeb htmlweb = new HtmlWeb();
+                var htmlIndex = htmlweb.Load(html);
+                
+                var listLinks = htmlIndex.DocumentNode.SelectNodes("//div[@class='rom-tr title']/a");
+                total = total + listLinks.Count;
 
-            var pageDocumentPlatformIndex = new HtmlDocument();
-            pageDocumentPlatformIndex.Load(web3);
-            
-            var listLinks = pageDocumentPlatformIndex.DocumentNode.SelectNodes("//div[@class='rom-tr title']/a");
+                string[] files = Directory.GetFiles(@"C:\Users\MSI\Google Drive\Projects\romscraper\prueba");
+                var filesNames = new List<string>();
 
-            string[] files = Directory.GetFiles(@"C:\Users\MSI\Google Drive\Projects\romscraper\prueba");
-            var filesNames = new List<string>();
-
-            foreach(string file in files){
-                filesNames.Add(Path.GetFileName(file));
-            }
-
-            foreach(var node in listLinks){
-                if(!filesNames.Contains(node.InnerText + ".zip")){
-                    var html = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
-                    HtmlWeb htmlweb = new HtmlWeb();
-                    var htmlRom = htmlweb.Load(html);
-
-                    var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
-                    string romScript = romLink.OuterHtml;
-                    int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
-                    string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
-
-                    WebClient wClient = new WebClient();
-                    wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
-                    count++;
-                    WriteLine($"Downloaded {count} out of {listLinks.Count - filesNames.Count}");
+                foreach(string file in files){
+                    filesNames.Add(Path.GetFileName(file));
                 }
-                // else{
-                //     WriteLine($"{node.InnerText}: Game already downloaded");
-                // }                    
+
+                foreach(var node in listLinks){
+                    flag = true;
+                    if(!filesNames.Contains(node.InnerText + ".zip")){
+                        var htmlRoms = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
+                        HtmlWeb htmlweb2 = new HtmlWeb();
+                        var htmlRom = htmlweb2.Load(htmlRoms);
+
+                        var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
+                        string romScript = romLink.OuterHtml;
+                        int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
+                        string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
+
+                        WebClient wClient = new WebClient();
+                        wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
+                        count++;
+                        WriteLine($"Downloaded {count} out of {listLinks.Count}");
+
+                        flag = false;
+                    }                
+                }
+                if(flag){
+                    WriteLine("You have the collection already");
+                }
             }
+            
                 // Write(node.InnerText + ": ");
                 // Console.WriteLine(node.Attributes["href"].Value);
         }
