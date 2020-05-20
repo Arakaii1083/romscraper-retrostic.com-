@@ -17,8 +17,6 @@ namespace RomScraper
         {
             MenuStartUp.startUp();
             RomPlatformFetcher newFetcher = new RomPlatformFetcher(@"https://www.freeroms.com");
-            WriteLine(newFetcher.uriContent);
         }
-
     }
 }

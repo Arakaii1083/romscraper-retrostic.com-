@@ -9,16 +9,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
-namespace romscraper
+namespace RomScraper
 {
     public class RomPlatformFetcher
     {
-        private string uriContent {get; set;}
+        public HtmlDocument uriContent {get; set;}
         public static int totalRomsDownloaded;
 
         public RomPlatformFetcher(string uri){
             HtmlWeb htmlweb = new HtmlWeb();
             var htmlIndex = htmlweb.Load(uri);
+            this.uriContent = htmlIndex;
         }
 
         public void platformLinks(){
