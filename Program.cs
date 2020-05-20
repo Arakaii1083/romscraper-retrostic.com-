@@ -30,10 +30,12 @@ namespace RomScraper
                 case 2:
                     MenuStartUp.menuHeader();
                     MenuStartUp.menuPlatforms();
+                    opt = MenuStartUp.menuSelection();
                     break;
                 case 3:
                     MenuStartUp.menuHeader();
                     DirectoryFetcher.libraryFecther();
+                    opt = MenuStartUp.menuSelection();
                     break;
                 default:
                     break;

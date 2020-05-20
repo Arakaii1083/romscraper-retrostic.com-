@@ -45,8 +45,9 @@ namespace RomScraper
                     string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
 
                     WebClient wClient = new WebClient();
+                    Uri uriRom = new Uri(urlDownload);
                     string root = DirectoryFetcher.currentDirectory + "/roms/" + RomDowloader.platform + "/";
-                    wClient.DownloadFile(urlDownload, @root + node.InnerText + ".zip");
+                    wClient.DownloadFile(uriRom, @root + node.InnerText + ".zip");
                     count++;
                     WriteLine($"Downloaded {count} out of {listLinks.Count}");
 
