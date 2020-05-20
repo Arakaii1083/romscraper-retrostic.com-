@@ -16,7 +16,7 @@ namespace RomScraper
         private static string[] directories;
         private static string[] files;
         private static List<string> filesName = new List<string>();
-        private static string currentDirectory = Directory.GetCurrentDirectory();
+        public static string currentDirectory = Directory.GetCurrentDirectory();
         private string platform {set; get;}
 
         public DirectoryFetcher(){}
@@ -24,13 +24,14 @@ namespace RomScraper
             this.platform = platform;
         }
 
-        public void checkPlatformDirectory(string dir){
-            if(!Directory.Exists(dir)){
-                Directory.CreateDirectory($@"{dir}");
+        public static void checkPlatformDirectory(string dir){
+            string path = DirectoryFetcher.currentDirectory + "/roms/" + dir;
+            if(!Directory.Exists(path)){
+                Directory.CreateDirectory($@"{path}");
             }
         }
 
-        public void libraryFecther(){
+        public static void libraryFecther(){
             Console.WriteLine("Games Library:\n");
             if(Directory.Exists($@"{currentDirectory}/roms")){
                 directories = Directory.GetDirectories($@"{currentDirectory}/roms");

@@ -13,25 +13,27 @@ namespace RomScraper
 {
     public class RomPlatformFetcher
     {
-        public HtmlDocument uriContent {get; set;}
+        public static HtmlDocument uriContent {get; set;}
         public static int totalRomsDownloaded;
 
         public RomPlatformFetcher(string uri){
             HtmlWeb htmlweb = new HtmlWeb();
             var htmlIndex = htmlweb.Load(uri);
-            this.uriContent = htmlIndex;
+            uriContent = htmlIndex;
         }
 
-        public void platformLinks(){
-            var listLinks = this.uriContent.DocumentNode.SelectNodes("//ul[@class='desktop-menu']/li/a");
-            // foreach(var node in listLinks){
-            //     if(node.InnerText!="Links" || node.InnerText!="Flash Games"){
-            //         // Console.WriteLine(node.Attributes["href"].Value);
-            //     }
-            // }
+        public static HtmlNodeCollection platformLinks(){
+            var listLinks = uriContent.DocumentNode.SelectNodes("//ul[@class='desktop-menu']/li/a");
+            return listLinks;
         }
-        public void romIndexesFetcher(HtmlDocument platformUri){
-            var listLinks = platformUri.DocumentNode.SelectNodes("//div[@class='page']/a");
+        public static void romIndexesFetcher(HtmlNode platformUri){
+            string uri = @"https://www.freeroms.com/" + platformUri.Attributes["href"].Value;
+            HtmlWeb htmlweb = new HtmlWeb();
+            var htmlIndex = htmlweb.Load(uri);
+            uriContent = htmlIndex;
+
+            var listLinks = uriContent.DocumentNode.SelectNodes("//div[@class='page']/a");
+
             foreach(var node in listLinks){
                 WriteLine(node.InnerText + ": ");
                 RomDowloader.romDownloader(node.Attributes["href"].Value);

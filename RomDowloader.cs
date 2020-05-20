@@ -13,6 +13,7 @@ namespace RomScraper
 {
     public class RomDowloader
     {
+        public static string platform;
         public static void romDownloader(string uri){
             int count = 0;
             bool flag = false;
@@ -22,9 +23,9 @@ namespace RomScraper
             var htmlIndex = htmlweb.Load(html);
             
             var listLinks = htmlIndex.DocumentNode.SelectNodes("//div[@class='rom-tr title']/a");
-            RomPlatformFetcher.totalRomsDownloaded += listLinks.Count;
+            RomPlatformFetcher.totalRomsDownloaded += listLinks.Count;            
 
-            string[] files = Directory.GetFiles(@"C:\Users\MSI\Google Drive\Projects\romscraper\prueba");
+            string[] files = Directory.GetFiles($@"{DirectoryFetcher.currentDirectory}/roms/{RomDowloader.platform}");
             var filesNames = new List<string>();
 
             foreach(string file in files){
@@ -44,7 +45,8 @@ namespace RomScraper
                     string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
 
                     WebClient wClient = new WebClient();
-                    wClient.DownloadFile(urlDownload, @"prueba/" + node.InnerText + ".zip");
+                    string root = DirectoryFetcher.currentDirectory + "/roms/" + RomDowloader.platform + "/";
+                    wClient.DownloadFile(urlDownload, @root + node.InnerText + ".zip");
                     count++;
                     WriteLine($"Downloaded {count} out of {listLinks.Count}");
 

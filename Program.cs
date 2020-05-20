@@ -16,7 +16,28 @@ namespace RomScraper
         static void Main(string[] args)
         {
             MenuStartUp.startUp();
-            RomPlatformFetcher newFetcher = new RomPlatformFetcher(@"https://www.freeroms.com");
+            try{
+                RomPlatformFetcher newFetcher = new RomPlatformFetcher(@"https://www.freeroms.com");
+            }
+            catch(Exception e){
+                WriteLine($"Exception: {e.GetType()}");
+            }
+            
+
+            int opt = MenuStartUp.menuSelection();
+            switch(opt){
+                case 1:
+                case 2:
+                    MenuStartUp.menuHeader();
+                    MenuStartUp.menuPlatforms();
+                    break;
+                case 3:
+                    MenuStartUp.menuHeader();
+                    DirectoryFetcher.libraryFecther();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
