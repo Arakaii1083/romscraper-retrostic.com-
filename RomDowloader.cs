@@ -11,46 +11,43 @@ using System.Threading;
 
 namespace RomScraper
 {
-    public class RomDowloader
+    public static class RomDownloader
     {
+
+        // public static HtmlNodeCollection romIndexList {set; get;}
         public static string platform;
+        public static string platformDirectory = $@"{DirectoryFetcher.currentDirectory}/roms/{platform}";
+        public static int totalRomsDownloaded = 0;
         public static void romDownloader(string uri){
             int count = 0;
-            bool flag = false;
+            bool flag = true;
+            var filesNames = new List<string>(Directory.GetFiles(platformDirectory));
             
-            var html = @"https://www.freeroms.com/"+uri;
-            HtmlWeb htmlweb = new HtmlWeb();
-            var htmlIndex = htmlweb.Load(html);
-            
-            var listLinks = htmlIndex.DocumentNode.SelectNodes("//div[@class='rom-tr title']/a");
-            RomPlatformFetcher.totalRomsDownloaded += listLinks.Count;            
+            var listRomsLinks = UriContentFetcher.getContent(@"https://www.freeroms.com/"+uri, "//div[@class='rom-tr title']/a", true);
 
-            string[] files = Directory.GetFiles($@"{DirectoryFetcher.currentDirectory}/roms/{RomDowloader.platform}");
-            var filesNames = new List<string>();
-
-            foreach(string file in files){
-                filesNames.Add(Path.GetFileName(file));
-            }
-
-            foreach(var node in listLinks){
-                flag = true;
+            foreach(var node in listRomsLinks){
                 if(!filesNames.Contains(node.InnerText + ".zip")){
-                    var htmlRoms = @"https://www.freeroms.com/"+node.Attributes["href"].Value;
-                    HtmlWeb htmlweb2 = new HtmlWeb();
-                    var htmlRom = htmlweb2.Load(htmlRoms);
 
-                    var romLink = htmlRom.DocumentNode.SelectSingleNode("//script[@language='javascript']");
+                    var romLink = UriContentFetcher.getContent(@"https://www.freeroms.com/"+node.Attributes["href"].Value, "//script[@language='javascript']", false);
+
                     string romScript = romLink.OuterHtml;
                     int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("http");
                     string urlDownload = romScript.Substring(romScript.IndexOf("http"),lengthSubs+4);
 
                     WebClient wClient = new WebClient();
                     Uri uriRom = new Uri(urlDownload);
-                    string root = DirectoryFetcher.currentDirectory + "/roms/" + RomDowloader.platform + "/";
-                    wClient.DownloadFile(uriRom, @root + node.InnerText + ".zip");
-                    count++;
-                    WriteLine($"Downloaded {count} out of {listLinks.Count}");
-
+                    string root = DirectoryFetcher.currentDirectory + "/roms/" + RomDownloader.platform + "/";
+                    
+                    try{
+                        wClient.DownloadFile(uriRom, @root + node.InnerText + ".zip");
+                        count++;
+                        WriteLine($"--- {node.InnerText}");
+                        WriteLine($"Downloaded {count} out of {listRomsLinks.Count}");
+                        totalRomsDownloaded++;
+                    }
+                    catch{
+                        WriteLine($"Rom: {node.InnerText} - Download Failed");
+                    }
                     flag = false;
                 }                
             }

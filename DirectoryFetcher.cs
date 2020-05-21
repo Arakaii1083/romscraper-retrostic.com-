@@ -11,23 +11,22 @@ using System.Threading;
 
 namespace RomScraper
 {
-    class DirectoryFetcher
+    static class DirectoryFetcher
     {
         private static string[] directories;
         private static string[] files;
-        private static List<string> filesName = new List<string>();
         public static string currentDirectory = Directory.GetCurrentDirectory();
-        private string platform {set; get;}
-
-        public DirectoryFetcher(){}
-        public DirectoryFetcher(string platform){
-            this.platform = platform;
-        }
 
         public static void checkPlatformDirectory(string dir){
             string path = DirectoryFetcher.currentDirectory + "/roms/" + dir;
             if(!Directory.Exists(path)){
-                Directory.CreateDirectory($@"{path}");
+                try{
+                    Directory.CreateDirectory($@"{path}");
+                }
+                catch{
+                    WriteLine("Folder creation failed.");
+                }
+                
             }
         }
 

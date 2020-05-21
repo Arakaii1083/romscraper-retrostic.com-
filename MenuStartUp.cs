@@ -11,53 +11,16 @@ using System.Threading;
 
 namespace RomScraper
 {
-    public static class MenuStartUp
+    public static class Menu
     {
         public static void startUp(){
             Console.Clear();
             menuHeader();
         }
 
-        public static int menuSelection(){
-            WriteLine("(1)Add game\t\t(2)Add platform\t\t(3)See library\t\t(Other)Exit");
-            WriteLine("Please, enter a number...");
-            try{
-                return Convert.ToInt16(ReadLine());
-            }
-            catch(Exception ex){
-                WriteLine("Shutting down...");
-                return 5;
-            }
-        }
-
-        public static void menuPlatforms(){
-            var links = RomPlatformFetcher.platformLinks();
-            int inc = 1;
-            int opt;
-
-            WriteLine("Platforms:");
-            foreach(var link in links){
-                if(link.InnerText!="Links" && link.InnerText!="Flash Games"){
-                    WriteLine($"({inc}): {link.InnerText}");
-                    inc++;
-                }
-            }
-            WriteLine($"({inc}): Exit selection");
-            opt = Convert.ToInt16(ReadLine());
-
-            if(opt>0 && opt <links.Count){
-                RomDowloader.platform = links[opt-1].InnerText;
-                DirectoryFetcher.checkPlatformDirectory(links[opt-1].InnerText);
-                RomPlatformFetcher.romIndexesFetcher(links[opt-1]);
-            }
-            else{
-                WriteLine("ERROR!");
-            }
-        }
-
         public static void menuHeader(){
             Clear();
-            SetWindowSize(91, 30);
+            SetWindowSize(93, 40);
 
             for(int i=1;i<91;i++){
                 SetCursorPosition(i, 1);
@@ -90,7 +53,7 @@ namespace RomScraper
             SetCursorPosition(3,5);
             Write("Developer: Antonio Montes");
             SetCursorPosition(3,6);
-            Write("Proyect: RomScraper");
+            Write("Proyect: RomScraper (source > freeroms.com)");
 
             SetCursorPosition(0,9);
         }

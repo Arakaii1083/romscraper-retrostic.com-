@@ -15,7 +15,8 @@ namespace RomScraper
     {
         static void Main(string[] args)
         {
-            MenuStartUp.startUp();
+            Menu.startUp();
+
             try{
                 RomPlatformFetcher newFetcher = new RomPlatformFetcher(@"https://www.freeroms.com");
             }
@@ -23,22 +24,69 @@ namespace RomScraper
                 WriteLine($"Exception: {e.GetType()}");
             }
             
-
-            int opt = MenuStartUp.menuSelection();
-            switch(opt){
+            int optMain = menuSelection();
+            
+            while(optMain>0 && optMain <4){
+                switch(optMain){
                 case 1:
                 case 2:
-                    MenuStartUp.menuHeader();
-                    MenuStartUp.menuPlatforms();
-                    opt = MenuStartUp.menuSelection();
+                    Menu.menuHeader();
+                    menuPlatforms();
+                    optMain = menuSelection();
                     break;
                 case 3:
-                    MenuStartUp.menuHeader();
+                    Menu.menuHeader();
                     DirectoryFetcher.libraryFecther();
-                    opt = MenuStartUp.menuSelection();
+                    optMain = menuSelection();
                     break;
                 default:
                     break;
+                }
+            }
+
+            int menuSelection(){
+                WriteLine("\n(1)Add game\t\t(2)Add platform\t\t(3)See library\t\t(Other)Exit");
+                WriteLine("Please, enter a number...");
+                try{
+                    return Convert.ToInt16(ReadLine());
+                }
+                catch{
+                    WriteLine("Shutting down...");
+                    return 5;
+                }
+            }
+
+            void menuPlatforms(){
+                var links = RomPlatformFetcher.listMenuLinks;   
+                int inc = 0;
+                int opt;
+
+                WriteLine("Platforms:");
+                foreach(var link in links){
+                    if(link.InnerText!="Links" && link.InnerText!="Flash Games"){
+                        WriteLine($"({inc}): {link.InnerText}");
+                        inc++;
+                    }
+                }
+                WriteLine($"({inc}): Exit selection");
+
+                opt = Convert.ToInt16(ReadLine());
+
+                if(opt>=0 && opt <links.Count){
+                    RomDownloader.platform = links[opt].InnerText;
+                    DirectoryFetcher.checkPlatformDirectory(links[opt].InnerText);
+                    RomPlatformFetcher.romIndexesFetcher(links[opt]);
+                    
+                    foreach(var node in RomPlatformFetcher.listIndexes){
+                        WriteLine(node.InnerText + ": ");
+                        RomDownloader.romDownloader(node.Attributes["href"].Value);
+                    }
+                    WriteLine($"Total downloaded: {RomDownloader.totalRomsDownloaded}");
+                    RomDownloader.totalRomsDownloaded = 0;
+                    }
+                else{
+                    WriteLine("ERROR!");
+                }
             }
         }
     }

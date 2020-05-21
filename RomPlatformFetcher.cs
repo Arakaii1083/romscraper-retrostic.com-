@@ -14,31 +14,18 @@ namespace RomScraper
     public class RomPlatformFetcher
     {
         public static HtmlDocument uriContent {get; set;}
-        public static int totalRomsDownloaded;
+        public static HtmlNodeCollection listMenuLinks {get; set;}
+        public static HtmlNodeCollection listIndexes {get; set;}
+
+        
 
         public RomPlatformFetcher(string uri){
-            HtmlWeb htmlweb = new HtmlWeb();
-            var htmlIndex = htmlweb.Load(uri);
-            uriContent = htmlIndex;
+            listMenuLinks = UriContentFetcher.getContent(uri, "//ul[@class='desktop-menu']/li/a", true);
         }
 
-        public static HtmlNodeCollection platformLinks(){
-            var listLinks = uriContent.DocumentNode.SelectNodes("//ul[@class='desktop-menu']/li/a");
-            return listLinks;
-        }
         public static void romIndexesFetcher(HtmlNode platformUri){
-            string uri = @"https://www.freeroms.com/" + platformUri.Attributes["href"].Value;
-            HtmlWeb htmlweb = new HtmlWeb();
-            var htmlIndex = htmlweb.Load(uri);
-            uriContent = htmlIndex;
-
-            var listLinks = uriContent.DocumentNode.SelectNodes("//div[@class='page']/a");
-
-            foreach(var node in listLinks){
-                WriteLine(node.InnerText + ": ");
-                RomDowloader.romDownloader(node.Attributes["href"].Value);
-            }
-            WriteLine($"Total downloaded: {totalRomsDownloaded}");
+            listIndexes = UriContentFetcher.getContent(@"https://www.freeroms.com/" + platformUri.Attributes["href"].Value, "//div[@class='page']/a", true);
+ 
         }
     }
 }
