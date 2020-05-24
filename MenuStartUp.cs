@@ -53,7 +53,7 @@ namespace RomScraper
             SetCursorPosition(3,5);
             Write("Developer: Antonio Montes");
             SetCursorPosition(3,6);
-            Write("Proyect: RomScraper (source > freeroms.com)");
+            Write("Proyect: RomScraper (source > retrostic.com)");
 
             SetCursorPosition(0,9);
         }

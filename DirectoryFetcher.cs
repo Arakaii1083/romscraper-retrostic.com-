@@ -17,16 +17,28 @@ namespace RomScraper
         private static string[] files;
         public static string currentDirectory = Directory.GetCurrentDirectory();
 
+        public static void checkRomsDirectory(){
+            if(!Directory.Exists($@"{currentDirectory}/roms")){
+                try{
+                    WriteLine($"Creating root directory (roms): {currentDirectory}/roms");
+                    Directory.CreateDirectory($@"{currentDirectory}/roms");
+                }
+                catch{
+                    WriteLine("Folder creation failed.");
+                }
+            }
+        }
+
         public static void checkPlatformDirectory(string dir){
             string path = DirectoryFetcher.currentDirectory + "/roms/" + dir;
             if(!Directory.Exists(path)){
                 try{
+                    WriteLine($"Creating directory: {path}");
                     Directory.CreateDirectory($@"{path}");
                 }
                 catch{
                     WriteLine("Folder creation failed.");
                 }
-                
             }
         }
 
@@ -39,8 +51,9 @@ namespace RomScraper
                     foreach(string directory in directories){
                         string folderName = new DirectoryInfo(directory).Name;
                         files = Directory.GetFiles(directory);
-
-                        Console.WriteLine($"Platform: {folderName} // Games: {files.Length}");                                       
+                        if(files.Length>0){
+                            Console.WriteLine($"Platform: {folderName} // Games: {files.Length}");
+                        }                                       
                     }
                 }
                 else{
