@@ -19,9 +19,10 @@ namespace RomScraper
         public static string platformDirectory;
         public static int totalRomsDownloaded = 0;
 
-        public static void romDownloader(string uri, HtmlNode node){
+        public static void romDownloader(HtmlNode node){
+            string uri = node.Attributes["href"].Value;
             var sessionData = UriContentFetcher.getContent(@"https://www.retrostic.com" + uri, "//input[@type='hidden']", true);
-            var fileNameFetcher = UriContentFetcher.getContent(@"https://www.retrostic.com" + uri, "//td[contains(text(), '.zip')]", false);
+            var fileNameFetcher = UriContentFetcher.getContent(@"https://www.retrostic.com" + uri, "//td[contains(text(), '.zip') or contains(text(), '.bin')]", false);
             
             platformDirectory = $@"{DirectoryFetcher.currentDirectory}/roms/{platform}";
 
@@ -88,14 +89,20 @@ namespace RomScraper
                 filesNames.Add(Path.GetFileName(file));
             }
 
-            if(!filesNames.Contains(node.InnerText + ".zip")){
+            if(!filesNames.Contains(node.InnerText + ".zip") || !filesNames.Contains(node.InnerText + ".bin")){
                 return true;
             }
             return false;
         }
 
         public static string getDownloadUrl(string romScript){
-            int lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("https");
+            int lengthSubs;
+            if(romScript.IndexOf(".zip")!=-1){
+                lengthSubs = romScript.IndexOf(".zip") - romScript.IndexOf("https");
+            }
+            else{
+                lengthSubs = romScript.IndexOf(".bin") - romScript.IndexOf("https");
+            }
             return romScript.Substring(romScript.IndexOf("https"),lengthSubs+4);
         }
     }
