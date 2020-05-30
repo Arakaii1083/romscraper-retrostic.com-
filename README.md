@@ -2,7 +2,7 @@
 ## Overview
 Web scraping project running a Windows terminal app for arcade ROMs fetchin. Data usage from retrostic.com.
 
-
+![picture alt](http://via.placeholder.com/200x150 "Title is optional")
 
 ## Features
 * Add a whole platform

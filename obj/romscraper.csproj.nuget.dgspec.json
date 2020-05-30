@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\martiant\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj": {}
+    "C:\\Users\\MSI\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\martiant\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj": {
+    "C:\\Users\\MSI\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\martiant\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj",
+        "projectUniqueName": "C:\\Users\\MSI\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj",
         "projectName": "romscraper",
-        "projectPath": "C:\\Users\\martiant\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj",
-        "packagesPath": "C:\\Users\\martiant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\martiant\\Google Drive\\Projects\\romscraper(retrostic.com)\\obj\\",
+        "projectPath": "C:\\Users\\MSI\\Google Drive\\Projects\\romscraper(retrostic.com)\\romscraper.csproj",
+        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MSI\\Google Drive\\Projects\\romscraper(retrostic.com)\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\martiant\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -56,7 +56,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
