@@ -21,4 +21,3 @@ Web scraping project running a Windows terminal app for arcade ROMs fetchin. Dat
 * .NET Core 3.1
   * HtmlAgilityPack
   * WeClient *sync* dowload service
-
