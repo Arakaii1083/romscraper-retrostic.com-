@@ -83,7 +83,10 @@ namespace RomScraper
                 }
                 //Selecting platform to download
                 Write("Select a platform by its number: ");
-                opt = Convert.ToInt32(ReadLine());
+                try{
+                    opt = Convert.ToInt32(ReadLine());
+                }
+                catch {return;}
                 WriteLine("\n");
 
                 if(opt>=0 && opt<links.Count+1){
