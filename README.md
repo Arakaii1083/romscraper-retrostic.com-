@@ -2,7 +2,6 @@
 ## Overview
 Web scraping project running a Windows terminal app for arcade ROMs fetchin. Data usage from retrostic.com.
 
-<<<<<<< HEAD
 ### Menu
 ![RomScraper - Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/MenuScreenshot.png "RomScraper - Menu")
 ### Platform
@@ -11,9 +10,6 @@ Web scraping project running a Windows terminal app for arcade ROMs fetchin. Dat
 ![RomScraper - Library](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/LibraryScreenshot.png "RomScraper - Library")
 ### Game searching
 ![RomScraper - Game searching](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/GameSearchScreenshot.png "RomScraper - Game searching")
-=======
-![RomScraper - Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/MenuScreenshot.png "RomScraper - Menu")
->>>>>>> 685c21978d67ee22e0d93f25a26389e4f2b938bc
 
 ## Features
 * Add a whole platform
@@ -25,4 +21,3 @@ Web scraping project running a Windows terminal app for arcade ROMs fetchin. Dat
 * .NET Core 3.1
   * HtmlAgilityPack
   * WeClient *sync* dowload service
-
