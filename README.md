@@ -17,7 +17,7 @@ Data usage from *retrostic.com*.
 * Add a whole platform
 * Search a specific game obtaining a list based on the number of downloads
 * Get an overview of your current library *(/roms/)*
-* Directories creation automation
+* Automatic directories creation
 
 ## Technologies:
 * .NET Core 3.1
