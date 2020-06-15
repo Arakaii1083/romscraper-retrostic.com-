@@ -23,3 +23,6 @@ Data usage from *retrostic.com*.
 * .NET Core 3.1
   * HtmlAgilityPack
   * WebClient *sync* dowload service
+
+## To be added:
+* Next version of this app will be using WPF.
