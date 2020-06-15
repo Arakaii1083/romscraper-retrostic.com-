@@ -1,6 +1,8 @@
 # RomScraper (source > retrostic.com)
 ## Overview:
-Web scraping project running a Windows' terminal app for arcade ROMs fetching. Data usage from *retrostic.com*.
+Web scraping project running a Windows' terminal app for arcade ROMs fetching. 
+Download whole platform libraries or look for a specific game!
+Data usage from *retrostic.com*.
 
 ### Menu:
 ![RomScraper - Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/MenuScreenshot.png "RomScraper - Menu")
