@@ -1,2 +1,5 @@
 # ignore rom files for test purposes
 **/roms/*
+
+# ignore temp files created in obj folder
+**/obj/

@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+Microsoft Visual Studio Solution File, Format Version 12.00dotnet publish -c Release -r win10-x64
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomScraper.RSGethtml", "RomScraper.RSGethtml\RomScraper.RSGethtml.csproj", "{EF9A9E74-6C04-4615-9D37-A93DBFE7058E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomScraper.DirectoryFetcher", "RomScraper.MenuStartUp", "RomScraper.Progam", "RomScraper.RomDownloader", "RomScraper.RomPlatformFetcher", "RomScraper.UriContentFetcher", "romscraper.csproj", "{EF9A9E74-6C04-4615-9D37-A93DBFE7058E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
