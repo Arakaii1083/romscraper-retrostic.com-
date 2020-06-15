@@ -15,7 +15,7 @@ Data usage from *retrostic.com*.
 
 ## Features:
 * Add a whole platform
-* Search a specific game obtaining a list based on the number of downloads.
+* Search a specific game obtaining a list based on the number of downloads
 * Get an overview of your current library *(/roms/)*
 * Directories creation automation
 
