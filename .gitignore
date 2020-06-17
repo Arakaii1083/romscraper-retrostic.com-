@@ -1,5 +1,21 @@
-# ignore rom files for test purposes
+# Ignore rom files for test purposes
 **/roms/*
 
-# ignore temp files created in obj folder
-**/obj/
+# Ignore Visual Studio Code temp files for .NET Core projects
+*.cache
+*.dll
+*.exe
+*.pdb
+/build/
+*.suo
+*.user
+_ReSharper.*/
+*.sdf
+*.opensdf
+*.tlog
+*.log
+TestResult.xml
+*.VisualState.xml
+Version.cs
+Version.h
+Version.cpp
