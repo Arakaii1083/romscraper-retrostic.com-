@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Net.Http;
 using static System.Console;
-using System.Threading.Tasks;
-using System.Threading;
-using HtmlAgilityPack;
-using System.Net;
-using System.IO;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace RomScraper
 {
@@ -35,17 +27,17 @@ namespace RomScraper
             while(optMain>0 && optMain <4){
                 switch(optMain){
                 case 1:
-                    Menu.menuHeader();
+                    Menu.startUp();
                     menuPlatforms();
                     optMain = menuSelection();
                     break;
                 case 2:
-                    Menu.menuHeader();
+                    Menu.startUp();
                     DirectoryFetcher.libraryFecther();
                     optMain = menuSelection();
                     break;
                 case 3:
-                    Menu.menuHeader();
+                    Menu.startUp();
                     searchGame();
                     optMain = menuSelection();
                     break;
@@ -128,7 +120,7 @@ namespace RomScraper
                 }
             }
             /*****************************
-            *********SEARCH ROM**********
+            ********SEARCHING MENU********
             *****************************/
             void searchGame(){
                 //Variables for selection purposes

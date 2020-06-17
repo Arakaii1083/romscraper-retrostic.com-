@@ -13,10 +13,14 @@ using System.Text;
 
 namespace RomScraper
 {
+    //Class to download either a whole platform or a single ROM
     public static class RomDownloader
     {
-        public static string platform;
-        public static string platformDirectory;
+        //Static variable for the platform name
+        public static string platform {get; set;}
+        //Static variable for the platform directory and check the existance of it
+        public static string platformDirectory {get; set;}
+        //Static variable to track the number of downloads
         public static int totalRomsDownloaded = 0;
 
         public static void romDownloader(HtmlNode node){

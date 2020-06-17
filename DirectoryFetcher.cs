@@ -1,22 +1,19 @@
 using System;
-using System.Net.Http;
 using static System.Console;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
-using System.Net;
 using System.IO;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 
 namespace RomScraper
 {
     static class DirectoryFetcher
     {
+        //Array containing all the platform directories
         private static string[] directories;
+        //Array containing all the files for counting
         private static string[] files;
+        //Static variable to get the path of the current directory of the running app
         public static string currentDirectory = Directory.GetCurrentDirectory();
 
+        //Function to check the existance of ROMs directory. In case of directory not found, this one would be created
         public static void checkRomsDirectory(){
             if(!Directory.Exists($@"{currentDirectory}/roms")){
                 try{
@@ -29,6 +26,7 @@ namespace RomScraper
             }
         }
 
+        //Function to check the existance of the specific platoform we are downloading. In case of directory not found, this one would be created
         public static void checkPlatformDirectory(string dir){
             string path = DirectoryFetcher.currentDirectory + "/roms/" + dir;
             if(!Directory.Exists(path)){
@@ -42,8 +40,9 @@ namespace RomScraper
             }
         }
 
+        //Function to show the current library with all the platforms and number of games
         public static void libraryFecther(){
-            Console.WriteLine("Games Library:\n");
+            WriteLine("Games Library:\n");
             if(Directory.Exists($@"{currentDirectory}/roms")){
                 directories = Directory.GetDirectories($@"{currentDirectory}/roms");
                 
@@ -52,17 +51,17 @@ namespace RomScraper
                         string folderName = new DirectoryInfo(directory).Name;
                         files = Directory.GetFiles(directory);
                         if(files.Length>0){
-                            Console.WriteLine($"Platform: {folderName} // Games: {files.Length}");
+                            WriteLine($"Platform: {folderName} // Games: {files.Length}");
                         }                                       
                     }
                 }
                 else{
-                    Console.WriteLine("Empty Library! Get yourself some roms!");
+                    WriteLine("Empty Library! Get yourself some roms!");
                 }
             }
             else{
                 Directory.CreateDirectory($@"{currentDirectory}/roms");
-                Console.WriteLine("Empty Library! Get yourself some roms!");
+                WriteLine("Empty Library! Get yourself some roms!");
             }
         }
     }
