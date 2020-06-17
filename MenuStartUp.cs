@@ -1,24 +1,12 @@
 using System;
-using System.Net.Http;
 using static System.Console;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
-using System.Net;
-using System.IO;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 
 namespace RomScraper
 {
     public static class Menu
     {
+        //Function to clear up the screen and show the header
         public static void startUp(){
-            Console.Clear();
-            menuHeader();
-        }
-
-        public static void menuHeader(){
             Clear();
             SetWindowSize(93, 40);
 
