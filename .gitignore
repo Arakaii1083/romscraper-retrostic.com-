@@ -1,5 +1,9 @@
 # Ignore rom files for test purposes
 **/roms/*
+**/bin/
+**/bin/*
+**/obj/
+**/obj/*
 
 # Ignore Visual Studio Code temp files for .NET Core projects
 *.cache
