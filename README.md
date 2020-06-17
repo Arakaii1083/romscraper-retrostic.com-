@@ -5,13 +5,13 @@ Download whole platform libraries or look for a specific game!
 Data usage from *retrostic.com*.
 
 ### Menu:
-![RomScraper - Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/MenuScreenshot.png "RomScraper - Menu")
+![RomScraper - Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/README.Sources/MenuScreenshot.png "RomScraper - Menu")
 ### Platform:
-![RomScraper - Platform Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/PlatformMenuScreenshot.png "RomScraper - Platform Menu")
+![RomScraper - Platform Menu](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/README.Sources/PlatformMenuScreenshot.png "RomScraper - Platform Menu")
 ### Library:
-![RomScraper - Library](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/LibraryScreenshot.png "RomScraper - Library")
+![RomScraper - Library](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/README.Sources/LibraryScreenshot.png "RomScraper - Library")
 ### Game searching:
-![RomScraper - Game searching](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/sources/GameSearchScreenshot.png "RomScraper - Game searching")
+![RomScraper - Game searching](https://github.com/TonyOcnos/romscraper-retrostic.com-/blob/master/README.Sources/GameSearchScreenshot.png "RomScraper - Game searching")
 
 ## Features:
 * Add a whole platform
