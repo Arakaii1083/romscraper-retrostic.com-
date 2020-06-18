@@ -4,8 +4,7 @@ using System.IO;
 
 namespace RomScraper
 {
-    static class DirectoryFetcher
-    {
+    static class DirectoryFetcher{
         //Array containing all the platform directories
         private static string[] directories;
         //Array containing all the files for counting

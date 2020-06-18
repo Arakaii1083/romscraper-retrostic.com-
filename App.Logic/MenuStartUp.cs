@@ -3,8 +3,7 @@ using static System.Console;
 
 namespace RomScraper
 {
-    public static class Menu
-    {
+    public static class Menu{
         //Function to clear up the screen and show the header
         public static void startUp(){
             Clear();

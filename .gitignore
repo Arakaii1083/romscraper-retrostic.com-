@@ -2,8 +2,12 @@
 **/roms/*
 **/bin/
 **/bin/*
+**/bin/Debug/
+**/bin/Release/
 **/obj/
 **/obj/*
+**/obj/Debug/
+**/obj/Release/
 
 # Ignore Visual Studio Code temp files for .NET Core projects
 *.cache

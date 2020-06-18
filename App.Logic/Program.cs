@@ -3,10 +3,8 @@ using static System.Console;
 
 namespace RomScraper
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
+    class Program{
+        static void Main(string[] args){
             //Clearing the screen and loading the header
             Menu.startUp();
 
