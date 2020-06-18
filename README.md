@@ -21,7 +21,7 @@ Data usage from *retrostic.com*.
 
 ## Technologies:
 * .NET Core 3.1
-  * HtmlAgilityPack
+  * HtmlAgilityPack *(https://www.nuget.org/packages/HtmlAgilityPack/)*
   * WebClient *sync* dowload service
 
 ## To be added:
