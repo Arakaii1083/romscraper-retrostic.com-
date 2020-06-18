@@ -11,6 +11,7 @@
 
 # Ignore Visual Studio Code temp files for .NET Core projects
 *.cache
+*.json
 *.dll
 *.exe
 *.pdb
