@@ -45,7 +45,7 @@ namespace RomScraper
             }
             //Method to return menu selection. In case of a string, catch exception and return 4 to close the app
             int menuSelection(){
-                WriteLine("\n(1)Add platform\t\t(2)See library\t\t(3)Search for a game\t\t(Other)Exit");
+                WriteLine("\n(1)Add platform\n(2)See library\n(3)Search for a game\n(Other)Exit\n");
                 WriteLine("Please, enter a number...");
                 try{
                     return Convert.ToInt16(ReadLine());
