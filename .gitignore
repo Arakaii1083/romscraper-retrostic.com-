@@ -24,7 +24,7 @@ _ReSharper.*/
 *.tlog
 *.log
 TestResult.xml
-*.VisualState.xml
+*.VisualState.xml 
 Version.cs
 Version.h
 Version.cpp
