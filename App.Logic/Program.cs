@@ -7,10 +7,12 @@ namespace RomScraper
         static void Main(string[] args){
             //Clearing the screen and loading the header
             Menu.startUp();
+            
+            RomPlatformFetcher rpf = null;
 
             //Instance of an object type RomPlatformFetcher to load the site content
             try{
-                RomPlatformFetcher newFetcher = new RomPlatformFetcher(@"https://www.retrostic.com/roms");
+                rpf = new RomPlatformFetcher(@"https://www.retrostic.com/roms");
                 WriteLine($"Connected to retrostic.com");
             }
             catch(Exception e){
@@ -59,15 +61,12 @@ namespace RomScraper
             ********PLATFORM MENU*********
             *****************************/
             void menuPlatforms(){
-                //Previous object instance of RomPlatformFetcher gets the different platform links
-                var links = RomPlatformFetcher.listMenuLinks;
-                
                 int countList = 1;
                 int opt;
 
                 //Showing the list of platforms
                 WriteLine("Platforms:");
-                foreach(var link in links){
+                foreach(var link in rpf.listMenuLinks){
                     WriteLine($"({countList}): {link.InnerText}");
                     countList++;
                 }
@@ -79,26 +78,25 @@ namespace RomScraper
                 catch {return;}
                 WriteLine("\n");
 
-                if(opt>=0 && opt<links.Count+1){
+                if(opt>=0 && opt<rpf.listMenuLinks.Count+1){
                     //Variable for control purposes
                     bool flag = true;
                     //Variable to go through whole platform pages result
                     int page = 1;
-                    //Get the platform name for directory purposes and calling a method to check if such 
-                    //directory already exists in our library
-                    RomDownloader.platform = links[opt-1].InnerText;
-                    DirectoryFetcher.checkPlatformDirectory(links[opt-1].InnerText);
+
+                    RomDownloader rd = new RomDownloader(rpf.listMenuLinks[opt-1].InnerText);
+                    DirectoryFetcher.checkPlatformDirectory(rd.platform);
                     
                     //Loop to fetch all the roms through the different pages (1,2,3...) till fails and catch
                     //the exception, then return false and end the loop
                     while(flag==true){
                         try{
                             //Call a method to catch of the rom links for the current page
-                            RomPlatformFetcher.romIndexesFetcher(links[opt-1], page);
+                            rpf.romIndexesFetcher(rpf.listMenuLinks[opt-1], page);
                             //Loop to go through all the links collected by the class RomPlatformFetcher
-                            foreach(var node in RomPlatformFetcher.listRoms){
+                            foreach(var node in rpf.listRoms){
                                 //Call a method to dowload the rom. Parameters: uri and currect HtmlNode
-                                RomDownloader.romDownloader(node);
+                                rd.romDownloader(node, rd.platform, rd.platformDirectory);
                             }
                             //While fetching content...
                             page++;
@@ -106,8 +104,8 @@ namespace RomScraper
                         //After the last page (1,2,3...N), done and showing the total amount of downloads
                         catch{
                             WriteLine("Done!");
-                            WriteLine($"\n\nTotal downloaded: {RomDownloader.totalRomsDownloaded}\n\n");
-                            RomDownloader.totalRomsDownloaded = 0;
+                            WriteLine($"\n\nTotal downloaded: {rd.totalRomsDownloaded}\n\n");
+                            rd.totalRomsDownloaded = 0;
                             flag = false;
                         }
                     }
@@ -133,9 +131,9 @@ namespace RomScraper
 
                 //Same concept like the Platform menu and selection
                 try{
-                    RomPlatformFetcher.romSearchListFetcher($@"https://www.retrostic.com/search?search_term_string={search}");
+                    rpf.romSearchListFetcher($@"https://www.retrostic.com/search?search_term_string={search}");
 
-                    foreach(var node in RomPlatformFetcher.listRoms){
+                    foreach(var node in rpf.listRoms){
                         WriteLine($"{countList}: {node.InnerText}");
                         countList++;
                     }
@@ -143,9 +141,10 @@ namespace RomScraper
                     opt = Convert.ToInt32(ReadLine());
                     WriteLine("\n");
 
-                    if(opt>=0 && opt<RomPlatformFetcher.listRoms.Count+1){
+                    if(opt>=0 && opt<rpf.listRoms.Count+1){
+                        RomDownloader rd = new RomDownloader("");
                         DirectoryFetcher.checkRomsDirectory();
-                        RomDownloader.romDownloader(RomPlatformFetcher.listRoms[opt-1]);
+                        rd.romDownloader(rpf.listRoms[opt-1], rd.platform, rd.platformDirectory);
                     }
                 }
                 catch{

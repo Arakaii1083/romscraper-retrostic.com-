@@ -11,27 +11,31 @@ using System.Text;
 namespace RomScraper
 {
     //Class to download either a whole platform or a single ROM
-    public static class RomDownloader{
+    public class RomDownloader{
         //Static variable for the platform name
-        public static string platform {get; set;}
+        public string platform {get; set;}
         //Static variable for the platform directory and check the existance of it
-        public static string platformDirectory {get; set;}
+        public string platformDirectory {get; set;}
         //Static variable to track the number of downloads
-        public static int totalRomsDownloaded = 0;
+        public int totalRomsDownloaded = 0;
+
+        public RomDownloader(string platform){
+            this.platform = platform;
+            this.platformDirectory = $@"{DirectoryFetcher.currentDirectory}/roms/{platform}";
+            this.totalRomsDownloaded = 0;
+        }
 
         //Function to get a HTML site and start downloading the resource (a batch of ROMs or a single one)
-        public static void romDownloader(HtmlNode node){
+        public void romDownloader(HtmlNode node, string platform, string platformDirectory){
             //Variable to contain the URL of the ROM to be downloaded
             string uri = node.Attributes["href"].Value;
             //Variable to contain the data to make a request to the server and get access to the download page
             var sessionData = UriContentFetcher.getContent(@"https://www.retrostic.com" + uri, "//input[@type='hidden']", true);
             //Variable to contain the name of the file as it is downloaded
             var fileNameFetcher = UriContentFetcher.getContent(@"https://www.retrostic.com" + uri, "//td[contains(text(), '.zip') or contains(text(), '.bin')]", false);
-            //Update class attribute with the root of the platform
-            platformDirectory = $@"{DirectoryFetcher.currentDirectory}/roms/{platform}";
             
             //We check if the ROM is already in such directory (library)
-            if(checkFileInDirectory(node)){
+            if(checkFileInDirectory(node, platformDirectory)){
                 try{
                     //Variable that contains the final site to extract the URL. We should pull a request with data gathered previously and contained in sessionData variable (nodes)
                     string romDownloadPageContent = pullRequest(@"https://www.retrostic.com" + uri + "/download", sessionData[0].Attributes["value"].Value, sessionData[1].Attributes["value"].Value, sessionData[2].Attributes["value"].Value);
@@ -44,13 +48,13 @@ namespace RomScraper
                     //NOTE: To avoid scraping alert from their server, I rather prefer to download the ROMs in sync mode
                     using (var wClient = new WebClient()){
                         Uri uriRom = new Uri(urlDownload);
-                        string root = DirectoryFetcher.currentDirectory + "/roms/" + RomDownloader.platform + "/";
+                        string root = DirectoryFetcher.currentDirectory + "/roms/" + platform + "/";
                         string fileName = @root + fileNameFetcher.InnerText;
                         
                         try{
                             wClient.DownloadFile(@uriRom, fileName);
                             Thread.Sleep(1000);
-                            WriteLine($"Downloading roms for: {RomDownloader.platform}");
+                            WriteLine($"Downloading roms for: {platform}");
                             WriteLine($"--- {node.InnerText}");
                             WriteLine($"Downloaded!\n");
                             //Update of the variable to track the number of downloads
@@ -96,7 +100,7 @@ namespace RomScraper
         }
 
         //Function to check if the ROM already exists in the library
-        public static bool checkFileInDirectory(HtmlNode node){
+        public static bool checkFileInDirectory(HtmlNode node, string platformDirectory){
             //Variable to keep the list of files
             string[] files = Directory.GetFiles(platformDirectory);
             var filesNames = new List<string>();
